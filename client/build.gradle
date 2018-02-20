@@ -1,0 +1,19 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'org.gradlefx', name: 'gradlefx', version: '1.4.0'
+    }
+}
+
+apply plugin: 'gradlefx'
+type='swf'
+frameworkLinkage = 'none'
+srcDirs = ['src']
+mainClass = 'com/king/worktest/client/Client.as'
+
+additionalCompilerOptions = [
+'-static-link-runtime-shared-libraries',
+'-load-config='+System.getenv('FLEX_HOME')+'\\frameworks\\flex-config.xml'
+]
