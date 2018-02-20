@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
     }
     dependencies {
@@ -17,3 +18,31 @@ additionalCompilerOptions = [
 '-static-link-runtime-shared-libraries',
 '-load-config='+System.getenv('FLEX_HOME')+'\\frameworks\\flex-config.xml'
 ]
+
+
+repositories {
+    maven {
+		name 'hamcrest-as3-repo'
+		url "https://repository.sonatype.org/content/groups/forge"
+	}
+}
+
+//dependency versions
+ext.hamcrest_as3_version = '1.1.0'
+
+testDirs=['test/src']
+
+dependencies {
+    test   group: 'hamcrest-as3',   name: 'hamcrest-as3',    version: hamcrest_as3_version,    ext: 'swc'
+	test files(project.file('libs/flexUnitTasks-4.1.0-8.jar').absolutePath,
+			   project.file('libs/flexunit-4.1.0-8-flex_4.1.0.16076.swc').absolutePath,
+			   project.file('libs/flexunit-cilistener-4.1.0-8-4.1.0.16076.swc').absolutePath,
+			   project.file('libs/flexunit-uilistener-4.1.0-8-4.1.0.16076.swc').absolutePath)
+}
+
+flexUnit {
+	additionalCompilerOptions = [
+		'-static-link-runtime-shared-libraries',
+        '-load-config='+System.getenv('FLEX_HOME')+'\\frameworks\\flex-config.xml'
+	]
+}
