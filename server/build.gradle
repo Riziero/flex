@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply from: 'https://raw.githubusercontent.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  testCompile group: 'junit', name: 'junit', version: '4.11'
+  providedCompile group: 'javax', name: 'javaee-web-api', version: '7.0'
+}
+
+war {
+	dependsOn ':client:compileFlex'
+	from(project(':client').compileFlex)
+}
