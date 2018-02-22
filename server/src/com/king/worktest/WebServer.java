@@ -1,6 +1,6 @@
 package com.king.worktest;
 
-import org.apache.jasper.servlet.JspServlet;
+import org.eclipse.jetty.jsp.JettyJspServlet;
 import org.eclipse.jetty.http.MimeTypes;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerCollection;
@@ -52,7 +52,7 @@ public class WebServer {
 		webContext.setParentLoaderPriority(true);
 
 		// register a replacement for the JspServlet with better configuration
-		ServletHolder servletHolder = new ServletHolder(JspServlet.class);
+		ServletHolder servletHolder = new ServletHolder("jsp", JettyJspServlet.class);
 		servletHolder.setName("jsp");
 		servletHolder.setInitParameter("keepgenerated", "true");
 		servletHolder.setInitParameter("reloading", "true");
