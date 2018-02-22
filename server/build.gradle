@@ -1,5 +1,4 @@
-apply plugin: 'war'
-apply from: 'https://raw.githubusercontent.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+apply plugin: 'java'
 
 repositories {
   mavenCentral()
@@ -17,9 +16,8 @@ dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-war {
+compileJava {
 	dependsOn ':WorkClient:compileFlex'
-	from(project(':WorkClient').compileFlex)
 }
 
 // configure Java plugin to look into our folder
