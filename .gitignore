@@ -1,0 +1,4 @@
+.gradle/
+server/build
+client/build
+/bin
