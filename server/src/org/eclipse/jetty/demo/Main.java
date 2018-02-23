@@ -43,23 +43,23 @@ import org.eclipse.jetty.webapp.Configuration;
 
 /**
  * Example of using JSP's with embedded jetty and using a
- * lighter-weight ServletContextHandler instead of a WebAppContext. 
- * 
+ * lighter-weight ServletContextHandler instead of a WebAppContext.
+ *
  * This example is somewhat odd in that it uses custom tag libs which reside
  * in a WEB-INF directory, even though WEB-INF is not meaningful to
  * a ServletContextHandler. This just shows that once we have
  * properly initialized the jsp engine, you can even use this type of
  * custom taglib, even if you don't have a full-fledged webapp.
- * 
+ *
  */
 public class Main
 {
     // Resource path pointing to where the WEBROOT is
     private static final String WEBROOT_INDEX = "/webroot/";
-    
+
     /**
      * JspStarter for embedded ServletContextHandlers
-     * 
+     *
      * This is added as a bean that is a jetty LifeCycle on the ServletContextHandler.
      * This bean's doStart method will be called as the ServletContextHandler starts,
      * and will call the ServletContainerInitializer for the jsp engine.
@@ -69,7 +69,7 @@ public class Main
     {
         JettyJasperInitializer sci;
         ServletContextHandler context;
-        
+
         public JspStarter (ServletContextHandler context)
         {
             this.sci = new JettyJasperInitializer();
@@ -84,7 +84,7 @@ public class Main
             Thread.currentThread().setContextClassLoader(context.getClassLoader());
             try
             {
-                sci.onStartup(null, context.getServletContext());   
+                sci.onStartup(null, context.getServletContext());
                 super.doStart();
             }
             finally
@@ -117,12 +117,12 @@ public class Main
     public void start() throws Exception
     {
         server = new Server();
-        
+
         // Define ServerConnector
         ServerConnector connector = new ServerConnector(server);
         connector.setPort(port);
         server.addConnector(connector);
-    
+
         // Add annotation scanning (for WebAppContexts)
         Configuration.ClassList classlist = Configuration.ClassList
                 .setServerDefault( server );
@@ -133,7 +133,7 @@ public class Main
         // Base URI for servlet context
         URI baseUri = getWebRootResourceUri();
         LOG.info("Base URI: " + baseUri);
-        
+
         // Create Servlet context
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         servletContextHandler.setContextPath("/");
@@ -141,7 +141,7 @@ public class Main
 
         // Since this is a ServletContextHandler we must manually configure JSP support.
         enableEmbeddedJspSupport(servletContextHandler);
-    
+
         // Add Application Servlets
         servletContextHandler.addServlet(DateServlet.class, "/date/");
         // Create Example of mapping jsp to path spec
@@ -149,7 +149,7 @@ public class Main
         holderAltMapping.setName("foo.jsp");
         holderAltMapping.setForcedPath("/test/foo/foo.jsp");
         servletContextHandler.addServlet(holderAltMapping, "/test/foo/");
-    
+
         // Default Servlet (always last, always named "default")
         ServletHolder holderDefault = new ServletHolder("default", DefaultServlet.class);
         holderDefault.setInitParameter("resourceBase", baseUri.toASCIIString());
@@ -166,7 +166,7 @@ public class Main
             LOG.fine(server.dump());
         }
     }
-    
+
     /**
      * Setup JSP Support for ServletContextHandlers.
      * <p>
@@ -181,7 +181,7 @@ public class Main
         // Establish Scratch directory for the servlet context (used by JSP compilation)
         File tempDir = new File(System.getProperty("java.io.tmpdir"));
         File scratchDir = new File(tempDir.toString(), "embedded-jetty-jsp");
-    
+
         if (!scratchDir.exists())
         {
             if (!scratchDir.mkdirs())
@@ -190,17 +190,17 @@ public class Main
             }
         }
         servletContextHandler.setAttribute("javax.servlet.context.tempdir", scratchDir);
-    
+
         // Set Classloader of Context to be sane (needed for JSTL)
         // JSP requires a non-System classloader, this simply wraps the
         // embedded System classloader in a way that makes it suitable
         // for JSP to use
         ClassLoader jspClassLoader = new URLClassLoader(new URL[0], this.getClass().getClassLoader());
         servletContextHandler.setClassLoader(jspClassLoader);
-        
+
         // Manually call JettyJasperInitializer on context startup
         servletContextHandler.addBean(new JspStarter(servletContextHandler));
-        
+
         // Create / Register JSP Servlet (must be named "jsp" per spec)
         ServletHolder holderJsp = new ServletHolder("jsp", JettyJspServlet.class);
         holderJsp.setInitOrder(0);
@@ -212,7 +212,7 @@ public class Main
         holderJsp.setInitParameter("keepgenerated", "true");
         servletContextHandler.addServlet(holderJsp, "*.jsp");
     }
-    
+
     private URI getWebRootResourceUri() throws FileNotFoundException, URISyntaxException
     {
         URL indexUri = this.getClass().getResource(WEBROOT_INDEX);
