@@ -153,12 +153,18 @@ public class WebServer {
 
 		// Since this is a ServletContextHandler we must manually configure JSP support.
 		enableEmbeddedJspSupport(servletContextHandler);
+// Create Example of mapping jsp to path spec
+        ServletHolder holderAltMapping = new ServletHolder();
+        holderAltMapping.setName("index");
+        holderAltMapping.setForcedPath("/app/.*");
+        servletContextHandler.addServlet(holderAltMapping, "/app/");
 
-		// Default Servlet (always last, always named "default")
-		ServletHolder holderDefault = new ServletHolder("default", DefaultServlet.class);
-		holderDefault.setInitParameter("resourceBase", baseUri.toASCIIString());
-		holderDefault.setInitParameter("dirAllowed", "true");
-		servletContextHandler.addServlet(holderDefault, "/index.jsp");
-		server.setHandler(servletContextHandler);
+        // Default Servlet (always last, always named "default")
+        ServletHolder holderDefault = new ServletHolder("default", DefaultServlet.class);
+        holderDefault.setInitParameter("resourceBase", baseUri.toASCIIString());
+        holderDefault.setInitParameter("dirAllowed", "true");
+        servletContextHandler.addServlet(holderDefault, "/");
+        server.setHandler(servletContextHandler);
+
 	}
 }
