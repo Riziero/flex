@@ -1,26 +1,4 @@
-apply plugin: 'distribution'
-
-
-
-distZip {
-    into(project.name) {
-	
-		from '.'
-		include 'server/conf/*'
-        include 'server/web/*'
-        include 'server/web/js/*'	
-		include 'server/bin/start.bat'
-		
-		include 'server/build/lib/*'
-		include 'shared/resources/levels'
-		include 'server/build/classes/main/com/king/worktest/*.class'
-		
-		from 'client/build'
-        include 'WorkClient.swf'		
-    }
-}
-
-task buildreportZip(type: Zip, dependsOn: build) {
+task buildreportZip(type: Zip) {
     classifier = 'buildreport'
 
     from('server/conf') {
@@ -48,3 +26,6 @@ task buildreportZip(type: Zip, dependsOn: build) {
 buildreportZip {
 	dependsOn 'server:compileJava'
 }
+
+// buildreportZip depends on 'server:compileJava' 
+// which in turn depends on the client. We have them all!
