@@ -47,4 +47,4 @@ flexUnit {
 	]
 }
 
-compileFlex.dependsOn(':copyTask')
+compileFlex.dependsOn(':copyRequiredScores')
