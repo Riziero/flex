@@ -1,0 +1,50 @@
+apply plugin: 'distribution'
+
+
+
+distZip {
+    into(project.name) {
+	
+		from '.'
+		include 'server/conf/*'
+        include 'server/web/*'
+        include 'server/web/js/*'	
+		include 'server/bin/start.bat'
+		
+		include 'server/build/lib/*'
+		include 'shared/resources/levels'
+		include 'server/build/classes/main/com/king/worktest/*.class'
+		
+		from 'client/build'
+        include 'WorkClient.swf'		
+    }
+}
+
+task buildreportZip(type: Zip, dependsOn: build) {
+    classifier = 'buildreport'
+
+    from('server/conf') {
+        into 'server/conf'
+    }from('server/web') {
+        into 'server/bin/web'
+    }
+	from('client/build/WorkClient.swf') {
+        into 'server/bin/web'
+    }from('server/build/lib/') {
+        into 'server/bin/lib'
+    }
+	from('server/bin/start.bat') {
+        into 'server/bin'
+    }
+	from('shared/resources/levels') {
+        into 'shared/resources/levels'
+    }
+	from('server/build/classes/main') {
+        into 'server/bin'
+	}
+	
+}
+
+buildreportZip {
+	dependsOn 'server:compileJava'
+}
