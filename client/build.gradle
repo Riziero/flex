@@ -46,3 +46,5 @@ flexUnit {
         '-load-config='+System.getenv('FLEX_HOME')+'\\frameworks\\flex-config.xml'
 	]
 }
+
+compileFlex.dependsOn(':copyTask')
