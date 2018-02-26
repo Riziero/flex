@@ -1,7 +1,5 @@
 package com.king.worktest;
 
-import com.acme.KingServlet;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
