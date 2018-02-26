@@ -3,7 +3,7 @@ node('me') {
     stage ('Clone') {
         checkout scm
         bat 'gradlew testFX test'
-        // junit '**/build/test-results/**/TEST-*.xml'
+        junit '**/build/test-results/**/TEST-*.xml'
     }
 
     stage('echo'){
@@ -12,7 +12,7 @@ node('me') {
 
     stage('zip_it'){
         bat 'gradlew buildreportZip'
-        // archiveArtifacts 'build/libs//*.war'
+        archiveArtifacts 'buildreporter.zip''
     }
 
 }
