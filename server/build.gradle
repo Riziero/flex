@@ -24,7 +24,7 @@ compileJava {
 	dependsOn 'copyToLib'
 }
 
-// configure Java plugin to look into our folder
+// configure Java plugin to look for source in our folder
 sourceSets {
     main {
         java {
@@ -37,6 +37,10 @@ sourceSets {
         }
     }
 }
+
+
+// Task that will copy runtime libs in server/build/lib
+// We will pack this folder in the zip
 task copyToLib(type: Copy) {
    into "$buildDir/lib"
   from configurations.runtime

@@ -1,22 +1,23 @@
 //pack into a folder layout that works out of the box
-
 task buildreportZip(type: Zip) {
     classifier = 'buildreport'
 
     from('server/conf') {
         into 'server/conf'
-    }from('server/web') {
+    }
+	from('server/web') {
         into 'server/bin/web'
     }
 	from('client/build/WorkClient.swf') {
         into 'server/bin/web'
-    }from('server/build/lib/') {
+    }
+	from('server/build/lib/') {
         into 'server/bin/lib'
     }
 	from('server/bin/start.bat') {
         into 'server/bin'
     }
-  from('server/bin/start.sh') {
+	from('server/bin/start.sh') {
         into 'server/bin'
     }
 	from('shared/resources/levels') {
@@ -25,18 +26,19 @@ task buildreportZip(type: Zip) {
 	from('server/build/classes/java/main') {
         into 'server/bin'
 	}
-  from('server/build/classes/main') {
+	from('server/build/classes/main') {
         into 'server/bin'
 	}
 }
 
+// buildreportZip depends on 'server:compileJava'
+// which in turn depends on the client compilation(compileFlex task). We have them all!
 buildreportZip {
 	dependsOn 'server:compileJava'
 }
 
-// buildreportZip depends on 'server:compileJava'
-// which in turn depends on the client. We have them all!
-
+// this task will deploy the json into client/generated
+// else the client will not compile
 task copyRequiredScores(type: Copy) {
     from 'shared/resources/levels'
     into 'client/generated'

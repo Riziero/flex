@@ -8,6 +8,7 @@ buildscript {
     }
 }
 
+// aplply gradlefx
 apply plugin: 'gradlefx'
 type='swf'
 frameworkLinkage = 'none'
@@ -19,7 +20,7 @@ additionalCompilerOptions = [
 '-load-config='+System.getenv('FLEX_HOME')+'\\frameworks\\flex-config.xml'
 ]
 
-
+// From here below, it is all about flex unit tests
 repositories {
     maven {
 		name 'hamcrest-as3-repo'
@@ -32,6 +33,7 @@ ext.hamcrest_as3_version = '1.1.0'
 
 testDirs=['test/src']
 
+// Following deps have been pre-downloaded as suggested in the gradleFX plugin
 dependencies {
     test   group: 'hamcrest-as3',   name: 'hamcrest-as3',    version: hamcrest_as3_version,    ext: 'swc'
 	test files(project.file('libs/flexUnitTasks-4.1.0-8.jar').absolutePath,
