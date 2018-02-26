@@ -1,5 +1,4 @@
 node('me') {
-
     stage ('Clone') {
         checkout scm
         bat 'gradlew clean'
@@ -15,5 +14,4 @@ node('me') {
         bat 'gradlew buildreportZip'
         archiveArtifacts '*.zip'
     }
-
 }
