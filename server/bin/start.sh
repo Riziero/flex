@@ -1,6 +1,6 @@
-#!/bin/bash
+!/bin/bash
 
 JAVA_STARTER="com.king.worktest.Starter"
-CLASSPATH=
+CLASSPATH="../conf;../../shared/resources;./lib/*;."
 
 java -cp $CLASSPATH $JAVA_STARTER

@@ -16,6 +16,9 @@ task buildreportZip(type: Zip) {
 	from('server/bin/start.bat') {
         into 'server/bin'
     }
+  from('server/bin/start.sh') {
+        into 'server/bin'
+    }
 	from('shared/resources/levels') {
         into 'shared/resources/levels'
     }
