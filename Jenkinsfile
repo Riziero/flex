@@ -2,6 +2,7 @@ node('me') {
 
     stage ('Clone') {
         checkout scm
+        bat 'gradlew clean'
         bat 'gradlew testFX test'
         junit '**/build/test-results/**/TEST-*.xml'
     }
