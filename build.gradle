@@ -19,16 +19,19 @@ task buildreportZip(type: Zip) {
 	from('shared/resources/levels') {
         into 'shared/resources/levels'
     }
-	from('server/build/classes/main') {
+	from('server/build/classes/java/main') {
         into 'server/bin'
-	}	
+	}
+  from('server/build/classes/main') {
+        into 'server/bin'
+	}
 }
 
 buildreportZip {
 	dependsOn 'server:compileJava'
 }
 
-// buildreportZip depends on 'server:compileJava' 
+// buildreportZip depends on 'server:compileJava'
 // which in turn depends on the client. We have them all!
 
 task copyRequiredScores(type: Copy) {
