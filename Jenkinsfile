@@ -13,7 +13,7 @@ node('me') {
 
     stage('zip_it'){
         bat 'gradlew buildreportZip'
-        archiveArtifacts 'buildreporter.zip'
+        archiveArtifacts '*.zip'
     }
 
 }
